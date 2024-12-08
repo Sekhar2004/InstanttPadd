@@ -1,57 +1,39 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './FileUploader.css'; // Import the CSS for styling
 
 const FileUploader = () => {
   const [file, setFile] = useState(null);
   const [qrCode, setQrCode] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile && !['image/png', 'image/jpeg', 'application/pdf', 'text/plain', 'application/x-ipynb+json'].includes(selectedFile.type)) {
-      alert('Only PNG, JPEG, or PDF files are allowed.');
-      return;
-    }
-    setFile(selectedFile);
-  };
+  const handleFileChange = (e) => setFile(e.target.files[0]);
 
   const handleUpload = async () => {
-    if (!file) {
-      alert('Please select a file to upload.');
-      return;
-    }
-
-    setIsUploading(true);
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      const response = await axios.post('https://instanttpadd.onrender.com/api/files/upload', formData);
-      setQrCode(response.data.qrCode);
+      const response = await axios.post('https://instanttpadd.onrender.com/api/files/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      setQrCode(response.data.qrCode); // Set the QR code image
+      console.log('File uploaded successfully:', response.data.fileUrl); // File URL from Cloudinary
     } catch (err) {
       console.error('File upload failed:', err);
-      alert('Failed to upload file. Please try again.');
-    } finally {
-      setIsUploading(false);
     }
   };
 
   return (
-    <div style={{ textAlign: 'center', margin: '20px' }}>
+    <div className="file-uploader-container">
       <h1>InstantPad - File Sharing</h1>
-      <input type="file" style={{ margin: '10px' }} onChange={handleFileChange} />
-      <button
-        style={{ padding: '10px 20px', cursor: 'pointer' }}
-        onClick={handleUpload}
-        disabled={isUploading}
-      >
-        {isUploading ? 'Uploading...' : 'Upload'}
-      </button>
-      {qrCode ? (
-        <img src={qrCode} alt="QR Code" style={{ marginTop: '20px', maxWidth: '200px' }} />
-      ) : (
-        <p>QR Code will appear here after a successful upload.</p>
-      )}
+      <div className="file-upload-box">
+        <input type="file" onChange={handleFileChange} className="file-input" />
+        <button onClick={handleUpload} className="upload-btn">Upload</button>
+      </div>
+      {qrCode && <div className="qr-code-container"><img src={qrCode} alt="QR Code" className="qr-code" /></div>}
     </div>
   );
 };
