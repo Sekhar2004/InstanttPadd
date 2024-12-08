@@ -16,15 +16,15 @@ const QRCodeScanner = () => {
 
   return (
     <div>
-      <h2>Scan QR Code</h2>
-      <input
+      {/* <h2>Scan QR Code</h2> */}
+      {/* <input
         type="text"
         placeholder="Enter QR Code URL"
         value={qrCodeURL}
         onChange={(e) => setQRCodeURL(e.target.value)}
       />
       <button onClick={fetchFile}>Fetch File</button>
-      {fileDetails && <div>File Name: {fileDetails.fileName}</div>}
+      {fileDetails && <div>File Name: {fileDetails.fileName}</div>} */}
     </div>
   );
 };
