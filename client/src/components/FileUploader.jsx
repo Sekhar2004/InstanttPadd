@@ -8,7 +8,7 @@ const FileUploader = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile && !['image/png', 'image/jpeg', 'application/pdf'].includes(selectedFile.type)) {
+    if (selectedFile && !['image/png', 'image/jpeg', 'application/pdf', 'text/plain', 'application/x-ipynb+json'].includes(selectedFile.type)) {
       alert('Only PNG, JPEG, or PDF files are allowed.');
       return;
     }
