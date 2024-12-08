@@ -12,7 +12,7 @@ const FileUploader = () => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/files/upload', formData);
+      const response = await axios.post('https://instanttpadd.onrender.com/api/files/upload', formData);
       setQrCode(response.data.qrCode);
     } catch (err) {
       console.error('File upload failed:', err);
