@@ -1,7 +1,9 @@
 InstantPad - File Sharing with QR Code Generator
+
 InstantPad is a web application that enables users to upload files and share them via automatically generated QR codes.
 
-Technologies Used
+Technologies Used :
+
 React.js: Frontend development.
 Node.js: Backend development.
 Cloudinary: File storage and hosting.
